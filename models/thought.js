@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
-
+// the reaction given to a thought.
 const reactionSchema = new Schema({
   thoughtText: {
     type: String,
@@ -16,7 +16,7 @@ const reactionSchema = new Schema({
     default: Date.now,
   },
 });
-
+// the thoughts, or the content of the post.
 const thoughtSchema = new Schema({
   thoughtText: {
     type: String,

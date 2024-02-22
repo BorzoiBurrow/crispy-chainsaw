@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
-
+// defines the user and the account they made.
 const userSchema = new Schema({
   username: {
     type: String,

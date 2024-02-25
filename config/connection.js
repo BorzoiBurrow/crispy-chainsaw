@@ -12,9 +12,15 @@ db.on('error', (err) => {
   console.error('MongoDB connection error:', error);
 });
 
-db.once('open', () => {
+db.once('open', async () => {
   console.log('Connected to the database');
-});
 
+  try {
+    await mongoose.model('Thought').createCollection();
+    await mongoose.model('User').createCollection();
+  } catch (error) {
+    console.error(error);
+  }
+});
 
 module.exports = mongoose;

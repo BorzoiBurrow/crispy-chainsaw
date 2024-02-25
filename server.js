@@ -9,6 +9,7 @@ app.use('/', routes);
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }))
+
 app.listen(PORT, () => {
     console.log(`listening on ${PORT}!`)
   })

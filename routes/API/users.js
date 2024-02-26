@@ -22,7 +22,6 @@ router.post('/users', async (req, res) => {
       res.status(500).json({error});
     }
   });
-
 // delete users
 router.delete('/users/:userId', async (req, res) => {
     try {
@@ -61,7 +60,7 @@ router.put('/users/:userId/username', async (req, res) => {
       res.status(500).json({error});
     }
   });
-  
+
   // get all users.
 router.get('/users', async (req, res) => {
     try {

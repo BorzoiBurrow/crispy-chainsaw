@@ -19,7 +19,7 @@ db.once('open', async () => {
     await mongoose.model('Thought').createCollection();
     await mongoose.model('User').createCollection();
   } catch (error) {
-    console.error(error);
+    console.log("crashed while attempting to connect to DB.", error);
   }
 });
 

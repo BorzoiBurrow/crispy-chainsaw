@@ -1,12 +1,10 @@
 const express = require("express")
 const router = require('express').Router();
 router.use(express.json());
-// import the models to read.
 const Thought = require("../../models/thought")
 const User = require("../../models/User")
 
 // get all thoughts.
-
 router.get('/thoughts', async (req, res) => {
     try {
       const thoughts = await Thought.find();
@@ -16,8 +14,8 @@ router.get('/thoughts', async (req, res) => {
       res.status(500).json({error});
     }
   });
-// post new thought
 
+  // post new thought
 router.post('/thoughts', async (req, res) => {
     try {
       const { thoughtText, username } = req.body;
@@ -35,10 +33,7 @@ router.post('/thoughts', async (req, res) => {
       res.status(500).json({error});
     }
   });
-
-
-// delete thoughts
-
+  // delete thoughts
   router.delete('/thoughts/:thoughtId', async (req, res) => {
     try {
       const { thoughtId } = req.params;
@@ -52,6 +47,4 @@ router.post('/thoughts', async (req, res) => {
       res.status(500).json({error});
     }
   });
-
-
 module.exports = router;

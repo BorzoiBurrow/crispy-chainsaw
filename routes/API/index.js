@@ -99,4 +99,25 @@ router.delete('/users/:userId', async (req, res) => {
   }
 });
 
+// update username
+router.put('/users/:userId/username', async (req, res) => {
+    try {
+      const { userId } = req.params;
+      const { newUsername } = req.body;
+  
+      if (!newUsername) {
+        return res.status(400).json({error:'New Username is required for swap.'});
+      }
+
+      const updatedUser = await User.findByIdAndUpdate(userId, { username: newUsername }, { new: true });
+      if (!updatedUser) {
+        return res.status(404).json({error});
+      }
+
+      res.status(200).json({ message: 'Username updated!', updatedUser });
+    } catch (error) {
+      console.error(error);
+      res.status(500).json({error});
+    }
+  });
 module.exports = router;

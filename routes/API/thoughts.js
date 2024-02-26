@@ -47,4 +47,21 @@ router.post('/thoughts', async (req, res) => {
       res.status(500).json({error});
     }
   });
+// get single thought
+  router.get('/thoughts/:thoughtId', async (req, res) => {
+    try {
+      const { thoughtId } = req.params;
+      const thought = await Thought.findById(thoughtId);
+
+      if (!thought) {
+        return res.status(404).json({error:'no thought found.'});
+      }
+  
+      res.status(200).json(thought);
+    } catch (error) {
+      console.error(error);
+      res.status(500).json({error});
+    }
+  });
+  
 module.exports = router;

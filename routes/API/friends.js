@@ -4,7 +4,7 @@ router.use(express.json());
 const Thought = require("../../models/thought")
 const User = require("../../models/User")
 
-router.put('/users/:userId/add-friend/:friendId', async (req, res) => {
+router.put('/users/:userId/friends/:friendId', async (req, res) => {
     try {
       const { userId, friendId } = req.params;
   
@@ -19,6 +19,21 @@ router.put('/users/:userId/add-friend/:friendId', async (req, res) => {
       await user.save();
   
       res.status(200).json({ message: 'Friend added successfully', user });
+    } catch (error) {
+      console.error(error);
+      res.status(500).json({error});
+    }
+  });
+
+  router.delete('/users/:userId/friends/:friendId', async (req, res) => {
+    try {
+      const { userId, friendId } = req.params;
+      const user = await User.findByIdAndUpdate(userId, { $pull: { friends: friendId } }, { new: true });
+  
+      if (!user) {
+        return res.status(404).json({ error: 'User not found' });
+      }
+    res.status(200).json({ message: 'Friend removed successfully', updatedUser: user });
     } catch (error) {
       console.error(error);
       res.status(500).json({error});

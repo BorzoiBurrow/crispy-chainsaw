@@ -63,5 +63,48 @@ router.post('/thoughts', async (req, res) => {
       res.status(500).json({error});
     }
   });
+
+  // route to add a reaction to the thought
+router.post('/thoughts/:thoughtId/reactions', async (req, res) => {
+    try {
+      const { thoughtId } = req.params;
+      const { reactionText, username } = req.body;
+      const thought = await Thought.findById(thoughtId);
+  
+      thought.reactions.push({ reactionText, username });
+      await thought.save();
+  
+      res.status(201).json({ message: 'Reaction added!', updatedThought: thought });
+    } catch (error) {
+      console.error(error);
+      res.status(500).json({error});
+    }
+  });
+  
+//   route to remove a reaction
+  router.delete('/thoughts/:thoughtId/reactions/:reactionId', async (req, res) => {
+    try {
+      const { thoughtId, reactionId } = req.params;
+      const thought = await Thought.findById(thoughtId);
+  
+      if (!thought) {
+        return res.status(404).json({ error: 'no thought matching ID' });
+      }
+      const reactionIndex = thought.reactions.findIndex(reaction => reaction._id.equals(reactionId));
+  
+      if (reactionIndex === -1) {
+        return res.status(404).json({ error: 'Reaction not found' });
+      }
+
+      thought.reactions.splice(reactionIndex, 1);
+      await thought.save();
+  
+      res.status(200).json({ message: 'Reaction removed', updatedThought: thought });
+    } catch (error) {
+      console.error(error);
+      res.status(500).json({error});
+    }
+  });
+
   
 module.exports = router;

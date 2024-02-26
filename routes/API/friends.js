@@ -4,6 +4,7 @@ router.use(express.json());
 const Thought = require("../../models/thought")
 const User = require("../../models/User")
 
+// add a new friend
 router.put('/users/:userId/friends/:friendId', async (req, res) => {
     try {
       const { userId, friendId } = req.params;
@@ -24,7 +25,7 @@ router.put('/users/:userId/friends/:friendId', async (req, res) => {
       res.status(500).json({error});
     }
   });
-
+// delete a friend
   router.delete('/users/:userId/friends/:friendId', async (req, res) => {
     try {
       const { userId, friendId } = req.params;
